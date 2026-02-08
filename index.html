@@ -540,6 +540,28 @@
             text-transform: uppercase;
         }
 
+        /* ===== Section title ===== */
+        .section-title {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 16px;
+            background: transparent;
+            border: none;
+        }
+
+        .section-title span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
+        .section-title:hover {
+            background: transparent;
+        }
+
         /* ===== Stack bar ===== */
         .stack-bar {
             grid-column: 1 / -1;
@@ -872,6 +894,9 @@
     </a>
 
     <!-- ===== PROJETS ===== -->
+    <div class="card section-title">
+        <span>Projets à impact</span>
+    </div>
     <div class="card project">
         <div class="project-client"><img src="https://www.handisport.org/wp-content/uploads/2023/11/Handisport-quadri-transparent-215x215.png" alt="FFH">Fédération Française Handisport</div>
         <div class="project-title">Système de paiement — Stripe & HelloAsso</div>
@@ -981,7 +1006,7 @@
 
     <!-- ===== FOOTER ===== -->
     <div class="footer">
-        <span>© 2026</span>
+        <span>© 2026 · <span title="↑↑↓↓←→←→BA" style="cursor: help; opacity: 0.4;">?</span></span>
     </div>
 
 </div>
