@@ -122,6 +122,42 @@
             padding: 24px;
             transition: all var(--transition);
             position: relative;
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent 0%,
+                rgba(255,255,255,0.06) 40%,
+                rgba(255,255,255,0.15) 50%,
+                rgba(255,255,255,0.06) 60%,
+                transparent 100%
+            );
+            transition: left 0.6s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        [data-theme="light"] .card::after {
+            background: linear-gradient(
+                120deg,
+                transparent 0%,
+                rgba(255,255,255,0.3) 40%,
+                rgba(255,255,255,0.6) 50%,
+                rgba(255,255,255,0.3) 60%,
+                transparent 100%
+            );
+        }
+
+        .card:hover::after {
+            left: 120%;
         }
 
         .card:hover {
@@ -313,42 +349,6 @@
             justify-content: center;
             padding: 20px 16px;
             gap: 10px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .tech-icon::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent 0%,
-                rgba(255,255,255,0.08) 40%,
-                rgba(255,255,255,0.2) 50%,
-                rgba(255,255,255,0.08) 60%,
-                transparent 100%
-            );
-            transition: left 0.6s ease;
-            pointer-events: none;
-        }
-
-        [data-theme="light"] .tech-icon::before {
-            background: linear-gradient(
-                120deg,
-                transparent 0%,
-                rgba(255,255,255,0.4) 40%,
-                rgba(255,255,255,0.7) 50%,
-                rgba(255,255,255,0.4) 60%,
-                transparent 100%
-            );
-        }
-
-        .tech-icon:hover::before {
-            left: 120%;
         }
 
         .tech-icon svg,
