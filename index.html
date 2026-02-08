@@ -678,6 +678,35 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        .easter-hint {
+            cursor: pointer;
+            opacity: 0.4;
+            position: relative;
+            transition: opacity 0.3s;
+        }
+
+        .easter-hint:hover { opacity: 0.7; }
+
+        .easter-code {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: var(--accent);
+            white-space: nowrap;
+            margin-bottom: 6px;
+        }
+
+        .easter-hint.show .easter-code {
+            display: block;
+        }
+
 
 
         /* ===== Card tilt ===== */
@@ -1006,7 +1035,7 @@
 
     <!-- ===== FOOTER ===== -->
     <div class="footer">
-        <span>© 2026 · <span title="↑↑↓↓←→←→BA" style="cursor: help; opacity: 0.4;">?</span></span>
+        <span>© 2026 · <span class="easter-hint" onclick="this.classList.toggle('show')">?<span class="easter-code">↑↑↓↓←→←→BA</span></span></span>
     </div>
 
 </div>
