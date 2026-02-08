@@ -524,6 +524,88 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+        /* ===== Custom cursor ===== */
+        .cursor-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.15s ease, opacity 0.15s ease;
+            opacity: 0;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot.visible {
+            opacity: 1;
+        }
+
+        .cursor-dot.clicking {
+            transform: translate(-50%, -50%) scale(2);
+        }
+
+        /* ===== GitHub heatmap ===== */
+        .heatmap {
+            grid-column: 1 / -1;
+            padding: 20px;
+        }
+
+        .heatmap-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .heatmap-grid {
+            display: grid;
+            grid-template-rows: repeat(7, 1fr);
+            grid-auto-flow: column;
+            grid-auto-columns: 1fr;
+            gap: 2px;
+            max-width: 100%;
+        }
+
+        .heatmap-cell {
+            aspect-ratio: 1;
+            border-radius: 2px;
+            background: var(--pill-bg);
+            min-width: 0;
+        }
+
+        .heatmap-cell.l1 { background: var(--accent); opacity: 0.25; }
+        .heatmap-cell.l2 { background: var(--accent); opacity: 0.5; }
+        .heatmap-cell.l3 { background: var(--accent); opacity: 0.75; }
+        .heatmap-cell.l4 { background: var(--accent); opacity: 1; }
+
+        /* ===== Card tilt ===== */
+        .card.tilt-ready {
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        /* ===== Konami confetti ===== */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 10000;
+            animation: confettiFall 3s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
         /* ===== Fade-in animation ===== */
         .card {
             opacity: 0;
@@ -584,6 +666,7 @@
     </svg>
 </button>
 
+<div class="cursor-dot" id="cursor"></div>
 <div class="bento">
 
     <!-- ===== HERO ===== -->
@@ -623,15 +706,15 @@
     <!-- ===== STATS ===== -->
     <div class="card stats">
         <div class="stat">
-            <span class="stat-value">6+</span>
+            <span class="stat-value" data-count="6" data-suffix="+">0</span>
             <span class="stat-label">Ans XP</span>
         </div>
         <div class="stat">
-            <span class="stat-value">3.3k+</span>
+            <span class="stat-value" data-count="3300" data-suffix="+" data-format="k">0</span>
             <span class="stat-label">Contributions en 2025</span>
         </div>
         <div class="stat">
-            <span class="stat-value">50+</span>
+            <span class="stat-value" data-count="50" data-suffix="+">0</span>
             <span class="stat-label">Personnes formées</span>
         </div>
     </div>
@@ -734,6 +817,12 @@
             <span>SQL</span>
             <span>Pédagogie</span>
         </div>
+    </div>
+
+    <!-- ===== HEATMAP ===== -->
+    <div class="card heatmap">
+        <div class="heatmap-title">Contributions GitHub — 2025</div>
+        <div class="heatmap-grid" id="heatmap"></div>
     </div>
 
     <!-- ===== EMAIL ===== -->
@@ -884,6 +973,148 @@
         camera.updateProjectionMatrix();
         renderer.setSize(hero.offsetWidth, hero.offsetHeight);
     });
+})();
+</script>
+
+<!-- Features: counters, tilt, heatmap, cursor, konami -->
+<script>
+(function() {
+    // ===== 1. Animated counters =====
+    const counters = document.querySelectorAll('.stat-value[data-count]');
+    const animateCounter = (el) => {
+        const target = parseInt(el.dataset.count);
+        const suffix = el.dataset.suffix || '';
+        const format = el.dataset.format;
+        const duration = 2000;
+        const start = performance.now();
+
+        function update(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(eased * target);
+
+            if (format === 'k') {
+                const val = current >= 1000 ? (current / 1000).toFixed(1) + 'k' : current;
+                el.textContent = val + suffix;
+            } else {
+                el.textContent = current + suffix;
+            }
+
+            if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+    };
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(c => counterObserver.observe(c));
+
+    // ===== 2. 3D tilt effect on cards =====
+    const cards = document.querySelectorAll('.card');
+    // Wait for fadeUp animation to finish before enabling tilt
+    setTimeout(() => {
+        cards.forEach(c => c.classList.add('tilt-ready'));
+    }, 600);
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -4;
+            const rotateY = ((x - centerX) / centerX) * 4;
+            card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(0)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+        });
+    });
+
+    // ===== 3. GitHub contribution heatmap =====
+    const heatmapGrid = document.getElementById('heatmap');
+    if (heatmapGrid) {
+        // Generate realistic heatmap data (52 weeks x 7 days)
+        const weeks = 52;
+        const days = 7;
+        for (let w = 0; w < weeks; w++) {
+            for (let d = 0; d < days; d++) {
+                const cell = document.createElement('div');
+                cell.className = 'heatmap-cell';
+                // Simulate contribution patterns
+                const rand = Math.random();
+                const weekFactor = Math.sin((w / weeks) * Math.PI * 2 + 1) * 0.3 + 0.5;
+                const dayFactor = (d > 0 && d < 6) ? 1.2 : 0.5;
+                const score = rand * weekFactor * dayFactor;
+                if (score > 0.7) cell.classList.add('l4');
+                else if (score > 0.45) cell.classList.add('l3');
+                else if (score > 0.25) cell.classList.add('l2');
+                else if (score > 0.1) cell.classList.add('l1');
+                heatmapGrid.appendChild(cell);
+            }
+        }
+    }
+
+    // ===== 4. Custom cursor =====
+    const cursor = document.getElementById('cursor');
+    if (cursor && window.matchMedia('(pointer: fine)').matches) {
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            if (!cursor.classList.contains('visible')) {
+                cursor.classList.add('visible');
+            }
+        });
+
+        document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
+        document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
+
+        document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
+        document.addEventListener('mouseenter', () => cursor.classList.add('visible'));
+    }
+
+    // ===== 5. Konami code easter egg =====
+    const konamiCode = [38,38,40,40,37,39,37,39,66,65];
+    let konamiIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+        if (e.keyCode === konamiCode[konamiIndex]) {
+            konamiIndex++;
+            if (konamiIndex === konamiCode.length) {
+                konamiIndex = 0;
+                launchConfetti();
+            }
+        } else {
+            konamiIndex = 0;
+        }
+    });
+
+    function launchConfetti() {
+        const colors = ['#C4653A', '#E8875C', '#4FC08D', '#FF2D20', '#FFD700', '#7C3AED', '#EC4899'];
+        for (let i = 0; i < 100; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = -10 + 'px';
+            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.width = (Math.random() * 8 + 5) + 'px';
+            confetti.style.height = (Math.random() * 8 + 5) + 'px';
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            confetti.style.animationDelay = (Math.random() * 1.5) + 's';
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 5000);
+        }
+    }
 })();
 </script>
 
