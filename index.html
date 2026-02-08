@@ -32,18 +32,18 @@
         }
 
         [data-theme="dark"] {
-            --bg: #1A1918;
-            --card: #242321;
-            --card-hover: #2C2B28;
-            --border: #363430;
-            --accent: #E8875C;
-            --accent-soft: #E8875C15;
-            --text: #EDEDEB;
-            --text-secondary: #A3A09B;
-            --text-tertiary: #6B6862;
-            --pill-bg: #2C2B28;
-            --pill-border: #3D3B37;
-            --toggle-bg: #363430;
+            --bg: #0B0B0B;
+            --card: #141414;
+            --card-hover: #1C1C1C;
+            --border: #252525;
+            --accent: #4ade80;
+            --accent-soft: #4ade8015;
+            --text: #E8E8E8;
+            --text-secondary: #8B8B8B;
+            --text-tertiary: #5A5A5A;
+            --pill-bg: #1A1A1A;
+            --pill-border: #2A2A2A;
+            --toggle-bg: #252525;
         }
 
         /* ===== Reset ===== */
@@ -470,13 +470,13 @@
         }
 
         [data-theme="dark"] .cta {
-            box-shadow: 0 4px 20px rgba(232, 135, 92, 0.25);
+            box-shadow: 0 4px 20px rgba(74, 222, 128, 0.2);
             animation: fadeUp 0.5s ease forwards, ctaPulseDark 4s ease-in-out 0.5s infinite;
         }
 
         @keyframes ctaPulseDark {
-            0%, 100% { box-shadow: 0 4px 20px rgba(232, 135, 92, 0.25); }
-            50% { box-shadow: 0 6px 30px rgba(232, 135, 92, 0.4); }
+            0%, 100% { box-shadow: 0 4px 20px rgba(74, 222, 128, 0.2); }
+            50% { box-shadow: 0 6px 30px rgba(74, 222, 128, 0.35); }
         }
 
         .cta:hover {
@@ -1056,7 +1056,7 @@
 
     function getAccentColor() {
         const theme = document.documentElement.getAttribute('data-theme');
-        return theme === 'dark' ? 0xE8875C : 0xC4653A;
+        return theme === 'dark' ? 0x4ade80 : 0xC4653A;
     }
 
     for (let i = 0; i < 8; i++) {
@@ -1086,7 +1086,7 @@
     const codeChars = ['{ }', '</>', '=>', '//', '( )', '&&', '::',  '<?php', '$ ', '[];'];
     function getAccentHex() {
         const theme = document.documentElement.getAttribute('data-theme');
-        return theme === 'dark' ? '#E8875C' : '#C4653A';
+        return theme === 'dark' ? '#4ade80' : '#C4653A';
     }
     function createTextSprite(text) {
         const canvas = document.createElement('canvas');
