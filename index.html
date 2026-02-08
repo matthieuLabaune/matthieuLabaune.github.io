@@ -1269,17 +1269,22 @@
         let i = 0;
         function shinyNext() {
             if (i >= allCards.length) {
-                // Reset all and restart after a pause
                 setTimeout(() => {
-                    allCards.forEach(c => c.classList.remove('shiny'));
-                    // Force reflow to reset animations
-                    void document.body.offsetHeight;
+                    // Reset: remove class and force reflow per element
+                    allCards.forEach(c => {
+                        c.classList.remove('shiny');
+                        void c.offsetWidth;
+                    });
                     i = 0;
                     setTimeout(shinyNext, 2000);
                 }, 1000);
                 return;
             }
-            allCards[i].classList.add('shiny');
+            // Remove then re-add to ensure animation restarts
+            const card = allCards[i];
+            card.classList.remove('shiny');
+            void card.offsetWidth;
+            card.classList.add('shiny');
             i++;
             setTimeout(shinyNext, 150);
         }
