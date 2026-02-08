@@ -253,6 +253,21 @@
             50% { opacity: 0.25; }
         }
 
+        .hero-glass {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 10px;
+            padding: 20px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            display: inline-block;
+        }
+
+        [data-theme="dark"] .hero-glass {
+            background: rgba(20, 20, 20, 0.4);
+            border-color: rgba(255, 255, 255, 0.04);
+        }
+
         .hero h1 {
             font-size: 30px;
             font-weight: 700;
@@ -266,6 +281,11 @@
             font-size: 15px;
             line-height: 1.55;
             max-width: 380px;
+        }
+
+        .hero p .em {
+            color: var(--accent);
+            font-weight: 600;
         }
 
         /* ===== Stats ===== */
@@ -741,8 +761,10 @@
     <!-- ===== HERO ===== -->
     <div class="card hero">
         <div class="tag">Disponible</div>
-        <h1>Matthieu Labaune</h1>
-        <p>Chercheur reconverti développeur. J'analyse comme un docteur, je livre comme un senior.</p>
+        <div class="hero-glass">
+            <h1>Matthieu Labaune</h1>
+            <p>Chercheur reconverti <span class="em">développeur</span>. J'analyse comme un docteur, je livre comme un <span class="em">senior</span>.</p>
+        </div>
     </div>
 
     <!-- ===== CALENDLY CTA ===== -->
