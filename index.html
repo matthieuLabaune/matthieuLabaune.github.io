@@ -324,13 +324,17 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            padding: 20px 24px;
-            background: transparent;
+            gap: 14px;
+            padding: 22px 24px;
+            background: var(--accent);
+            border-color: var(--accent);
+            text-align: center;
         }
 
         .email-card:hover {
-            background: var(--accent-soft);
+            background: var(--accent);
+            opacity: 0.9;
+            border-color: var(--accent);
         }
 
         .email-card .icon {
@@ -345,13 +349,13 @@
         .email-card .icon svg {
             width: 20px;
             height: 20px;
-            fill: var(--accent);
+            fill: white;
         }
 
         .email-card span {
-            font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
-            color: var(--text-secondary);
+            font-weight: 600;
+            color: white;
             letter-spacing: 0.3px;
         }
 
