@@ -1035,7 +1035,7 @@
 
     <!-- ===== FOOTER ===== -->
     <div class="footer">
-        <span>© 2026 · <span class="easter-hint" onclick="this.classList.toggle('show')">?<span class="easter-code">↑↑↓↓←→←→BA</span></span></span>
+        <span>© 2026 · <span class="easter-hint" id="easterHint" onclick="this.classList.toggle('show')">?<span class="easter-code">↑↑↓↓←→←→BA · ou 5 taps ici</span></span></span>
     </div>
 
 </div>
@@ -1303,6 +1303,22 @@
             setTimeout(() => confetti.remove(), 5000);
         }
     }
+    // ===== 5 taps easter egg =====
+    const easterHint = document.getElementById('easterHint');
+    if (easterHint) {
+        let tapCount = 0;
+        let tapTimer = null;
+        easterHint.addEventListener('click', () => {
+            tapCount++;
+            clearTimeout(tapTimer);
+            tapTimer = setTimeout(() => { tapCount = 0; }, 1500);
+            if (tapCount >= 5) {
+                tapCount = 0;
+                launchConfetti();
+            }
+        });
+    }
+
     // ===== 6. Sequential shiny effect =====
     function runShinyLoop() {
         const allCards = document.querySelectorAll('.bento > .card');
