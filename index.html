@@ -209,22 +209,22 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #1a7a3a;
-            background: #d4f5df;
-            border: 1px solid #a8e6be;
+            color: #8B4513;
+            background: #F5E6D3;
+            border: 1px solid #D4A574;
             margin-bottom: 16px;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             padding: 6px 14px;
             border-radius: 100px;
-            box-shadow: 0 0 12px rgba(34, 197, 94, 0.25), 0 0 30px rgba(34, 197, 94, 0.1);
+            box-shadow: 0 0 12px rgba(180, 100, 40, 0.2), 0 0 30px rgba(180, 100, 40, 0.1);
             animation: glowPulse 3s ease-in-out infinite;
         }
 
         @keyframes glowPulse {
-            0%, 100% { box-shadow: 0 0 12px rgba(34, 197, 94, 0.25), 0 0 30px rgba(34, 197, 94, 0.1); }
-            50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.4), 0 0 50px rgba(34, 197, 94, 0.2); }
+            0%, 100% { box-shadow: 0 0 12px rgba(180, 100, 40, 0.2), 0 0 30px rgba(180, 100, 40, 0.1); }
+            50% { box-shadow: 0 0 20px rgba(180, 100, 40, 0.35), 0 0 50px rgba(180, 100, 40, 0.15); }
         }
 
 
@@ -238,9 +238,13 @@
             content: '';
             width: 8px;
             height: 8px;
-            background: #22c55e;
+            background: #B4642A;
             border-radius: 50%;
             animation: pulse 2.5s ease-in-out infinite;
+        }
+
+        [data-theme="dark"] .hero .tag::before {
+            background: #22c55e;
         }
 
         @keyframes pulse {
@@ -895,9 +899,9 @@
 
     <!-- ===== PROJETS FFH ===== -->
     <div class="card project">
-        <div class="project-client"><img src="https://cdn.brandfetch.io/idfABUOzuf/w/210/h/80/theme/dark/logo.png?c=1bxid64Mup7aczewSAYMX&t=1768909389833" alt="FFH">Fédération Française Handisport</div>
+        <div class="project-client"><img src="https://www.handisport.org/wp-content/uploads/2023/11/Handisport-quadri-transparent-215x215.png" alt="FFH">Fédération Française Handisport</div>
         <div class="project-title">Système de paiement — Stripe & HelloAsso</div>
-        <div class="project-desc">Mise en place d'un système de paiement Stripe (SEPA) et HelloAsso (CB) ayant traité plus de 2M€ de licences et affiliations fédérales.</div>
+        <div class="project-desc">Mise en place d'un système de paiement Stripe (SEPA) et HelloAsso (CB) ayant traité plus de 2M€+ en 2 ans de licences et affiliations fédérales.</div>
         <div class="project-tags">
             <span>Laravel</span>
             <span>Stripe</span>
@@ -907,7 +911,7 @@
     </div>
 
     <div class="card project">
-        <div class="project-client"><img src="https://cdn.brandfetch.io/idfABUOzuf/w/210/h/80/theme/dark/logo.png?c=1bxid64Mup7aczewSAYMX&t=1768909389833" alt="FFH">Fédération Française Handisport</div>
+        <div class="project-client"><img src="https://www.handisport.org/wp-content/uploads/2023/11/Handisport-quadri-transparent-215x215.png" alt="FFH">Fédération Française Handisport</div>
         <div class="project-title">Comptabilité virtuelle par event sourcing</div>
         <div class="project-desc">Conception d'un système de comptabilité virtuelle pour les clubs affiliés, basé sur l'event sourcing pour un suivi fiable et traçable des flux financiers.</div>
         <div class="project-tags">
@@ -918,7 +922,7 @@
     </div>
 
     <div class="card project">
-        <div class="project-client"><img src="https://cdn.brandfetch.io/idfABUOzuf/w/210/h/80/theme/dark/logo.png?c=1bxid64Mup7aczewSAYMX&t=1768909389833" alt="FFH">Fédération Française Handisport</div>
+        <div class="project-client"><img src="https://www.handisport.org/wp-content/uploads/2023/11/Handisport-quadri-transparent-215x215.png" alt="FFH">Fédération Française Handisport</div>
         <div class="project-title">Extranet — Licences & affiliations</div>
         <div class="project-desc">Développement de l'extranet fédéral pendant 6 ans (CDI puis freelance). Gestion complète des prises de licences et affiliations des clubs, en étant force de proposition auprès du métier.</div>
         <div class="project-tags">
@@ -929,7 +933,7 @@
     </div>
 
     <div class="card project">
-        <div class="project-client"><img src="https://cdn.brandfetch.io/idfABUOzuf/w/210/h/80/theme/dark/logo.png?c=1bxid64Mup7aczewSAYMX&t=1768909389833" alt="FFH">Fédération Française Handisport</div>
+        <div class="project-client"><img src="https://www.handisport.org/wp-content/uploads/2023/11/Handisport-quadri-transparent-215x215.png" alt="FFH">Fédération Française Handisport</div>
         <div class="project-title">Back-office — Dashboards, métriques & PDF</div>
         <div class="project-desc">Développement de dashboards, métriques, exports et génération automatisée de PDF. Solutions affinées grâce à des échanges réguliers avec le métier.</div>
         <div class="project-tags">
