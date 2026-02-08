@@ -147,22 +147,32 @@
 
         .hero .tag {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent);
+            letter-spacing: 1.5px;
+            color: #1a7a3a;
+            background: #d4f5df;
+            border: 1px solid #a8e6be;
             margin-bottom: 16px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            padding: 6px 14px;
+            border-radius: 100px;
+        }
+
+        [data-theme="dark"] .hero .tag {
+            color: #6ee09a;
+            background: #1a3a28;
+            border-color: #2a5a3a;
         }
 
         .hero .tag::before {
             content: '';
-            width: 7px;
-            height: 7px;
-            background: var(--accent);
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
             border-radius: 50%;
             animation: pulse 2.5s ease-in-out infinite;
         }
