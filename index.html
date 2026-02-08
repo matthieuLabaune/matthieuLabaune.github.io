@@ -996,12 +996,54 @@
         shapes.push(mesh);
     }
 
+    // Code character sprites
+    const codeChars = ['{ }', '</>', '=>', '//', '( )', '&&', '::',  '<?php', '$ ', '[];'];
+    function getAccentHex() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        return theme === 'dark' ? '#E8875C' : '#C4653A';
+    }
+    function createTextSprite(text) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 128;
+        canvas.height = 64;
+        const ctx = canvas.getContext('2d');
+        ctx.font = '500 28px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = getAccentHex();
+        ctx.globalAlpha = 0.6;
+        ctx.fillText(text, 64, 32);
+        const texture = new THREE.CanvasTexture(canvas);
+        const mat = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.5 });
+        const sprite = new THREE.Sprite(mat);
+        sprite.scale.set(1.2, 0.6, 1);
+        sprite.userData.canvas = canvas;
+        sprite.userData.text = text;
+        return sprite;
+    }
+
+    const textSprites = [];
+    codeChars.forEach(ch => {
+        const sprite = createTextSprite(ch);
+        sprite.position.x = (Math.random() - 0.5) * 8;
+        sprite.position.y = (Math.random() - 0.5) * 4;
+        sprite.position.z = (Math.random() - 0.5) * 2 - 1;
+        sprite.userData.floatSpeed = 0.2 + Math.random() * 0.4;
+        sprite.userData.floatOffset = Math.random() * Math.PI * 2;
+        sprite.userData.baseY = sprite.position.y;
+        scene.add(sprite);
+        shapes.push(sprite);
+        textSprites.push(sprite);
+    });
+
     function animate() {
         requestAnimationFrame(animate);
         const t = Date.now() * 0.001;
         shapes.forEach(s => {
-            s.rotation.x += s.userData.rotX;
-            s.rotation.y += s.userData.rotY;
+            if (s.userData.rotX !== undefined) {
+                s.rotation.x += s.userData.rotX;
+                s.rotation.y += s.userData.rotY;
+            }
             s.position.y = s.userData.baseY + Math.sin(t * s.userData.floatSpeed + s.userData.floatOffset) * 0.15;
         });
         renderer.render(scene, camera);
@@ -1011,7 +1053,22 @@
     // Update colors on theme change
     const observer = new MutationObserver(() => {
         const color = getAccentColor();
-        shapes.forEach(s => s.material.color.setHex(color));
+        shapes.forEach(s => {
+            if (s.material.color) s.material.color.setHex(color);
+        });
+        // Redraw text sprites with new color
+        textSprites.forEach(sprite => {
+            const canvas = sprite.userData.canvas;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, 128, 64);
+            ctx.font = '500 28px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = getAccentHex();
+            ctx.globalAlpha = 0.6;
+            ctx.fillText(sprite.userData.text, 64, 32);
+            sprite.material.map.needsUpdate = true;
+        });
     });
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
