@@ -195,7 +195,7 @@
             width: 100% !important;
             height: 100% !important;
             pointer-events: none;
-            opacity: 0.5;
+            opacity: 0.2;
         }
 
         .hero > *:not(canvas) {
@@ -253,20 +253,6 @@
             50% { opacity: 0.25; }
         }
 
-        .hero-glass {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border-radius: 10px;
-            padding: 20px 24px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            display: inline-block;
-        }
-
-        [data-theme="dark"] .hero-glass {
-            background: rgba(20, 20, 20, 0.4);
-            border-color: rgba(255, 255, 255, 0.04);
-        }
 
         .hero h1 {
             font-size: 30px;
@@ -703,8 +689,12 @@
             margin-bottom: 6px;
         }
 
-        .easter-hint.show .easter-code {
-            display: block;
+        .mobile-only { display: none !important; }
+        .easter-hint.show .desktop-only { display: block; }
+
+        @media (pointer: coarse) {
+            .desktop-only { display: none !important; }
+            .easter-hint.show .mobile-only { display: block !important; }
         }
 
 
@@ -795,11 +785,9 @@
     <!-- ===== HERO ===== -->
     <div class="card hero">
         <div class="tag">Disponible</div>
-        <div class="hero-glass">
-            <h1>Matthieu Labaune</h1>
-            <p>Chercheur reconverti <span class="em">Développeur</span>.</p>
-            <p class="line2">J'analyse comme un docteur, je livre comme un <span class="em">Senior</span>.</p>
-        </div>
+        <h1>Matthieu Labaune</h1>
+        <p>Chercheur reconverti <span class="em">Développeur</span>.</p>
+        <p class="line2">J'analyse comme un docteur, je livre comme un <span class="em">Senior</span>.</p>
     </div>
 
     <!-- ===== CALENDLY CTA ===== -->
@@ -1035,7 +1023,7 @@
 
     <!-- ===== FOOTER ===== -->
     <div class="footer">
-        <span>© 2026 · <span class="easter-hint" id="easterHint" onclick="this.classList.toggle('show')">?<span class="easter-code">↑↑↓↓←→←→BA · ou 5 taps ici</span></span></span>
+        <span>© 2026 · <span class="easter-hint" id="easterHint" onclick="this.classList.toggle('show')">?<span class="easter-code desktop-only">↑↑↓↓←→←→BA</span><span class="easter-code mobile-only">5 taps ici</span></span></span>
     </div>
 
 </div>
