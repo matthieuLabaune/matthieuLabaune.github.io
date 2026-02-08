@@ -308,28 +308,73 @@
         /* ===== Tech icon card ===== */
         .tech-icon {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            perspective: 600px;
+            padding: 20px 16px;
+            gap: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tech-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent 0%,
+                rgba(255,255,255,0.08) 40%,
+                rgba(255,255,255,0.2) 50%,
+                rgba(255,255,255,0.08) 60%,
+                transparent 100%
+            );
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+
+        [data-theme="light"] .tech-icon::before {
+            background: linear-gradient(
+                120deg,
+                transparent 0%,
+                rgba(255,255,255,0.4) 40%,
+                rgba(255,255,255,0.7) 50%,
+                rgba(255,255,255,0.4) 60%,
+                transparent 100%
+            );
+        }
+
+        .tech-icon:hover::before {
+            left: 120%;
         }
 
         .tech-icon svg,
         .tech-icon img {
             width: 36px;
             height: 36px;
-            animation: spin3d 6s linear infinite;
-            transition: animation-duration 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
         .tech-icon:hover svg,
         .tech-icon:hover img {
-            animation-duration: 1.5s;
+            transform: scale(1.15);
         }
 
-        @keyframes spin3d {
-            0% { transform: rotateY(0deg); }
-            100% { transform: rotateY(360deg); }
+        .tech-icon .tech-level {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-tertiary);
+            transition: color var(--transition);
+        }
+
+        .tech-icon:hover .tech-level {
+            color: var(--accent);
         }
 
         /* ===== Wide card ===== */
@@ -762,11 +807,13 @@
     </a>
     <a href="https://laravel.com" target="_blank" rel="noopener" class="card tech-icon" title="Laravel">
         <svg viewBox="0 0 50 52" fill="#FF2D20"><path d="M49.626 11.564a.809.809 0 01.028.209v10.972a.8.8 0 01-.402.694l-9.209 5.302V39.25c0 .286-.152.55-.4.694L20.42 51.01c-.044.025-.092.041-.14.058-.018.006-.035.017-.054.022a.805.805 0 01-.41 0c-.022-.006-.042-.018-.063-.026-.044-.016-.09-.03-.132-.054L.402 39.944A.801.801 0 010 39.25V6.334c0-.072.01-.142.028-.21.006-.023.02-.044.028-.067.015-.042.029-.085.051-.124.015-.026.037-.047.055-.071.023-.032.044-.065.071-.093.02-.02.047-.034.069-.052.027-.021.05-.046.08-.064h.001L9.749.163a.803.803 0 01.803 0l9.466 5.463h.001c.03.018.053.043.08.064.022.018.049.032.069.052.027.028.048.06.071.093.018.024.04.045.055.071.022.04.036.082.051.124.008.023.022.044.028.068a.809.809 0 01.028.209v20.559l8.008-4.611v-10.51c0-.07.01-.141.028-.208.007-.024.02-.045.028-.068.016-.042.03-.085.052-.124.014-.026.036-.047.054-.071.024-.032.044-.065.072-.093.02-.02.046-.034.068-.052.028-.021.051-.046.081-.064h.001l9.466-5.463a.803.803 0 01.803 0l9.466 5.463c.03.018.054.043.081.064.022.018.048.032.068.052.028.028.049.061.072.093.018.024.04.045.054.071.023.039.036.082.052.124.008.023.022.045.028.068zm-1.574 10.718V12.9l-3.364 1.938-4.644 2.674v9.382l8.008-4.612zm-9.466 16.264V29.17l-4.57 2.61-12.904 7.378v9.44l17.474-10.073zM1.604 7.27v31.44L19.076 48.8v-9.44l-9.204-5.2-.004-.002-.004-.002c-.028-.018-.05-.043-.077-.063-.022-.018-.048-.031-.066-.05l-.002-.003c-.024-.027-.044-.06-.066-.09-.017-.024-.04-.045-.053-.07l-.002-.004c-.018-.037-.03-.078-.044-.118-.01-.025-.023-.047-.03-.073l-.001-.003A.807.807 0 019.2 33.47V13.836L4.554 11.16l-2.95-1.7v-2.19zm8.548-5.483L1.888 6.332l8.262 4.764 8.264-4.764-8.262-4.545zm4.234 31.178l4.644-2.674V7.27l-3.364 1.938-4.644 2.674v22.999l3.364-1.937zm19.097-21.435L25.22 16.075l8.264 4.764 8.262-4.764-8.263-4.545zm-.801 10.173l-4.644-2.674-3.364-1.938v9.382l4.644 2.674 3.364 1.938v-9.382zm-17.474 16.98l11.67-6.671 5.8-3.315-8.252-4.756-9.21 5.303-8.27 4.764 8.262 4.675z"/></svg>
+        <span class="tech-level">Expert</span>
     </a>
 
     <!-- ===== VUE + LINKEDIN ===== -->
     <a href="https://vuejs.org" target="_blank" rel="noopener" class="card tech-icon" title="Vue.js">
         <svg viewBox="0 0 261.76 226.69" fill="#4FC08D"><path d="M161.096.001l-30.225 52.351L100.647.001H0l130.877 226.688L261.76.001z" opacity=".5"/><path d="M161.096.001l-30.225 52.351L100.647.001H52.346l78.526 136.01L209.398.001z"/></svg>
+        <span class="tech-level">Avancé</span>
     </a>
     <a href="https://www.linkedin.com/in/labaune-matthieu/" target="_blank" rel="noopener" class="card link-card wide">
         <div class="icon">
@@ -790,6 +837,7 @@
     </a>
     <a href="https://anthropic.com" target="_blank" rel="noopener" class="card tech-icon" title="Claude AI">
         <img src="https://cdn.worldvectorlogo.com/logos/anthropic-1.svg" alt="Anthropic" width="36" height="36">
+        <span class="tech-level">Passionné</span>
     </a>
 
     <!-- ===== PROJETS ===== -->
