@@ -650,28 +650,6 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* ===== Custom cursor ===== */
-        .cursor-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.15s ease, opacity 0.15s ease;
-            opacity: 0;
-            mix-blend-mode: difference;
-        }
-
-        .cursor-dot.visible {
-            opacity: 1;
-        }
-
-        .cursor-dot.clicking {
-            transform: translate(-50%, -50%) scale(2);
-        }
 
 
         /* ===== Card tilt ===== */
@@ -755,7 +733,6 @@
     </svg>
 </button>
 
-<div class="cursor-dot" id="cursor"></div>
 <div class="bento">
 
     <!-- ===== HERO ===== -->
@@ -1232,25 +1209,7 @@
         });
     });
 
-    // ===== 3. Custom cursor =====
-    const cursor = document.getElementById('cursor');
-    if (cursor && window.matchMedia('(pointer: fine)').matches) {
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            if (!cursor.classList.contains('visible')) {
-                cursor.classList.add('visible');
-            }
-        });
-
-        document.addEventListener('mousedown', () => cursor.classList.add('clicking'));
-        document.addEventListener('mouseup', () => cursor.classList.remove('clicking'));
-
-        document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
-        document.addEventListener('mouseenter', () => cursor.classList.add('visible'));
-    }
-
-    // ===== 5. Konami code easter egg =====
+    // ===== 3. Konami code easter egg =====
     const konamiCode = [38,38,40,40,37,39,37,39,66,65];
     let konamiIndex = 0;
 
